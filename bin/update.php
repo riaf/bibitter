@@ -1,4 +1,5 @@
 <?php
+set_time_limit(50);
 chdir(dirname(__FILE__));
 require_once dirname(__FILE__). '/__init__.php';
 Rhaco::import('model.CountLog');
