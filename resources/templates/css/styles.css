@@ -28,6 +28,16 @@ h2 {
   color: #333;
 }
 
+#chart {
+  margin: 0 auto;
+  width: 520px;
+  background: #efefef;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
 #navi {
   margin: 60px;
   padding: 0;
