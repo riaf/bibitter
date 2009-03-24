@@ -1,0 +1,10 @@
+<project rhacover="1.6.1" version="0.0.1" name="BiBitter" pathinfo="index.php" xmlns="http://rhaco.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhaco.org http://m.rhaco.org/xsd/project_1_6_x.xsd">
+    <database name="happen">
+        <table name="count_log">
+            <column name="id" />
+            <column name="times" type="int" default="0" />
+            <column name="since_id" type="int" default="0" />
+            <column name="created" type="timestamp" default="sysdate" />
+        </table>
+    </database>
+</project>
