@@ -11,7 +11,19 @@ if(!Variable::istype('CountLog', $last_log)){
 }
 
 $twitter = new TwitterAPI();
-$timelines = $twitter->status_public_timeline($last_log->sinceId + 1);
+$timelines = array();
+$tl_ids = array();
+$_lid = $last_log->sinceId;
+for($i=0;$i<10;$i++){
+    $_tls = $twitter->status_public_timeline($_lid);
+    foreach($_tls as $_tl){
+        if(in_array($_tl['id'], $tl_ids)) continue;
+        $tl_ids[] = $_tl['id'];
+        $_lid = ($_lid < $_tl['id'])? $_tl['id']: $_lid;
+        $timelines[] = $_tl;
+    }
+    sleep(1.5);
+}
 
 $counter = 0;
 $since_id = $last_log->sinceId;
