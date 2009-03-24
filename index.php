@@ -4,6 +4,7 @@ Rhaco::import('generic.Urls');
 
 Urls::parser(array(
     '^$' => array('class' => 'BiBitter', 'method' => 'index'),
+    '^total$' => array('class' => 'BiBitter', 'method' => 'total'),
     '^history$' => array('class' => 'StaticPage', 'method' => 'parse', 'args' => array('history.html')),
     '^about$' => array('class' => 'StaticPage', 'method' => 'parse', 'args' => array('about.html')),
     '^chart/(.+)$' => array('class' => 'BiBitter', 'method' => 'chart'),

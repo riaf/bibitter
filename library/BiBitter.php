@@ -11,6 +11,12 @@ class BiBitter
         $parser->setVariable('recent_counter', CountLog::recent($db));
         return $parser;
     }
+    function total(){
+        $db = new DbUtil(CountLog::connection());
+        $parser = new HtmlParser('index.html');
+        $parser->setVariable('recent_counter', number_format($db->sum(new CountLog(), CountLog::columnTimes())));
+        return $parser;
+    }
     
     function chart($type='hourly'){
         $db = new DbUtil(CountLog::connection());
