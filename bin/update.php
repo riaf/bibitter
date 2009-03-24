@@ -1,9 +1,10 @@
 <?php
-set_time_limit(50);
+set_time_limit(55);
 chdir(dirname(__FILE__));
 require_once dirname(__FILE__). '/__init__.php';
 Rhaco::import('model.CountLog');
 Rhaco::import('arbo.network.services.TwitterAPI');
+Rhaco::import('single_execution');
 
 $db = new DbUtil(CountLog::connection());
 $last_log = $db->get(new CountLog(), new C(Q::orderDesc(CountLog::columnCreated())));
@@ -15,7 +16,7 @@ $twitter = new TwitterAPI();
 $timelines = array();
 $tl_ids = array();
 $_lid = $last_log->sinceId;
-for($i=0;$i<10;$i++){
+for($i=0;$i<30;$i++){
     $_tls = $twitter->status_public_timeline($_lid);
     foreach($_tls as $_tl){
         if(in_array($_tl['id'], $tl_ids)) continue;
@@ -23,7 +24,7 @@ for($i=0;$i<10;$i++){
         $_lid = ($_lid < $_tl['id'])? $_tl['id']: $_lid;
         $timelines[] = $_tl;
     }
-    sleep(1.5);
+    sleep(1);
 }
 
 $counter = 0;
