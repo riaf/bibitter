@@ -24,9 +24,10 @@ class BiBitter
         switch($type){
             case 'hourly':
             default:
-                $url = BiBitter::_getChartUrl(CountLog::historyByHourly($db), array(
-                    'chtt' => 'Yesterday BiBitter Chart by hourly',
-                    'chl' => '0|6|12|18|24')
+                $hist = CountLog::historyByHourly($db);
+                $url = BiBitter::_getChartUrl($hist, array(
+                    'chtt' => 'Recently BiBitter Chart by hourly',
+                    'chl' => implode('|', array_keys($hist)))
                 );
         }
         Header::redirect($url);
@@ -46,10 +47,9 @@ class BiBitter
         if($maxValue == 0) $maxValue = 1;
         $simpleEncoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         $chartData = "s:";
-        for($i=0;$i<count($values);$i++){
-            $currentValue = $values[$i];
-            if($currentValue > -1){
-                $chartData .= substr($simpleEncoding, 61 * ($currentValue / $maxValue), 1);
+        foreach($values as $value){
+            if($value > -1){
+                $chartData .= substr($simpleEncoding, 61 * ($value / $maxValue), 1);
             } else {
                 $chartData .= '_';
             }
