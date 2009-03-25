@@ -18,7 +18,7 @@ class CountLog extends CountLogTable{
                 new C(Q::gte(CountLog::columnCreated(), $stime), Q::lt(CountLog::columnCreated(), $etime)));
             $stime += 3600;
             $etime += 3600;
-            $s = ($s+1 > 24)? 0: $s+1;
+            $s = ($s+1 >= 24)? 0: $s+1;
         }
         return $hist;
     }
