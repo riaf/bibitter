@@ -24,7 +24,6 @@ class BibitterCounter extends Dao
             $etime += 3600;
             $s = ($s+1 >= 24)? 0: $s+1;
         }
-        Log::d($hist);
         return $hist;
     }
 }
