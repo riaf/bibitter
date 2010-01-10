@@ -70,8 +70,8 @@ class Bibitter extends Flow
         }
         $chxl = 0;
         while($chxl < $maxValue){
-            $chxl += 1000;
+            $chxl += 5000;
         }
-        return $chartData. "&chxt=y&chxl=0:|". implode('|', range(0, $chxl, 1000));
+        return $chartData. "&chxt=y&chxl=0:|". implode('|', range(0, $chxl, 5000));
     }
 }
