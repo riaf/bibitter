@@ -27,7 +27,7 @@ class Bibitter extends Flow
             $text = $status['text'];
             $times += substr_count($text, '!');
             $times += mb_substr_count($text, '！');
-            if($times > 0 && time() - 5 > $last_update){
+            if($times > 0 && time() - 180 > $last_update){
                 try {
                     $counter = new BibitterCounter();
                     $counter->times($times);
