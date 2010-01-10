@@ -1,0 +1,6 @@
+<database>
+    <table name="bibitter_counter">
+        <column name="times" type="number" require="true" />
+        <column name="updated" type="timestamp" />
+    </table>
+</database>
