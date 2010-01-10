@@ -27,7 +27,7 @@ class Bibitter extends Flow
             $text = $status['text'];
             $times += substr_count($text, '!');
             $times += mb_substr_count($text, '！');
-            if($times > 0 && time() - 180 > $last_update){
+            if($times > 0 && time() - def('update_span', 180) > $last_update){
                 try {
                     $counter = new BibitterCounter();
                     $counter->times($times);
@@ -70,8 +70,8 @@ class Bibitter extends Flow
         }
         $chxl = 0;
         while($chxl < $maxValue){
-            $chxl += 100;
+            $chxl += 1000;
         }
-        return $chartData. "&chxt=y&chxl=0:|". implode('|', range(0, $chxl, 100));
+        return $chartData. "&chxt=y&chxl=0:|". implode('|', range(0, $chxl, 1000));
     }
 }
