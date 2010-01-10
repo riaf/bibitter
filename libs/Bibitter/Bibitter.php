@@ -5,6 +5,7 @@ class Bibitter extends Flow
 {
     public function current(){
         $this->vars('times', (int) C(BibitterCounter)->find_sum('times', Q::gt('updated', time()-1800)));
+        $this->vars('interval', def('update_span', 180) * 500);
         return $this;
     }
     public function history(){
