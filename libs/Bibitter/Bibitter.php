@@ -53,6 +53,7 @@ class Bibitter extends Flow
         echo 'disconnected...', PHP_EOL;
         echo date('Y-m-d H:i:s'), PHP_EOL;
         for($wait=30;$wait>0;$wait--){
+            sleep(1);
             echo 'recconect wait '. $wait. ' sec', PHP_EOL;
         }
         $this->crawl();
