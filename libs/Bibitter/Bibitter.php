@@ -18,6 +18,8 @@ class Bibitter extends Flow
         return $this;
     }
     public function crawl(){
+        echo 'starting crawl...', PHP_EOL;
+        echo date('Y-m-d H:i:s'), PHP_EOL;
         $times = 0;
         $last_update = time();
         $stream = fopen(sprintf('http://%s:%s@stream.twitter.com/1/statuses/sample.json',
@@ -47,6 +49,13 @@ class Bibitter extends Flow
                 $last_update = time();
             }
         }
+        Log::flush();
+        echo 'disconnected...', PHP_EOL;
+        echo date('Y-m-d H:i:s'), PHP_EOL;
+        for($wait=30;$wait>0;$wait--){
+            echo 'recconect wait '. $wait. ' sec', PHP_EOL;
+        }
+        $this->crawl();
     }
     private function get_chart_url($history, $extra=null){
         $url = 'http://chart.apis.google.com/chart?chs=500x300&cht=ls';
