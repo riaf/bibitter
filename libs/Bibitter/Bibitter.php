@@ -22,32 +22,36 @@ class Bibitter extends Flow
         echo date('Y-m-d H:i:s'), PHP_EOL;
         $times = 0;
         $last_update = time();
-        $stream = fopen(sprintf('http://%s:%s@stream.twitter.com/1/statuses/sample.json',
-            def('twitter_account'), def('twitter_password')), 'r');
-        while($json = fgets($stream)){
-            $status = json_decode($json, true);
-            if(!isset($status['text'])) continue;
-            $text = $status['text'];
-            $times += substr_count($text, '!');
-            $times += mb_substr_count($text, '！');
-            if($times > 0 && time() - def('update_span', 180) > $last_update){
-                try {
-                    $counter = new BibitterCounter();
-                    $counter->times($times);
-                    $counter->save();
-                    C($counter)->commit();
-                    unset($counter);
-                } catch(Exception $e) {
-                    echo $e->getMessage(), PHP_EOL;
-                    Log::d($counter);
-                    exit;
-                    continue;
+        try {
+            $stream = fopen(sprintf('http://%s:%s@stream.twitter.com/1/statuses/sample.json',
+                def('twitter_account'), def('twitter_password')), 'r');
+            while($json = fgets($stream)){
+                $status = json_decode($json, true);
+                if(!isset($status['text'])) continue;
+                $text = $status['text'];
+                $times += substr_count($text, '!');
+                $times += mb_substr_count($text, '！');
+                if($times > 0 && time() - def('update_span', 180) > $last_update){
+                    try {
+                        $counter = new BibitterCounter();
+                        $counter->times($times);
+                        $counter->save();
+                        C($counter)->commit();
+                        unset($counter);
+                    } catch(Exception $e) {
+                        echo $e->getMessage(), PHP_EOL;
+                        Log::d($counter);
+                        exit;
+                        continue;
+                    }
+                    Log::debug(sprintf('updated: %d times on %s.', $times, date('Y-m-d H:i:s')));
+                    Log::flush();
+                    $times = 0;
+                    $last_update = time();
                 }
-                Log::debug(sprintf('updated: %d times on %s.', $times, date('Y-m-d H:i:s')));
-                Log::flush();
-                $times = 0;
-                $last_update = time();
             }
+        } catch (Exception $e){
+            echo $e->getMessage(), PHP_EOL;
         }
         Log::flush();
         echo 'disconnected...', PHP_EOL;
